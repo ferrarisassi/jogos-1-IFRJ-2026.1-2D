@@ -46,7 +46,7 @@ public class PersonagemController : MonoBehaviour
         
         horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && groundCheckScript != null && groundCheckScript.isOnGround)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && groundCheckScript.isOnGround)
         {
             devePular = true;
         }
@@ -57,10 +57,8 @@ public class PersonagemController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Executa a movimentação horizontal precisa
         Mover();
 
-        // Executa o pulo se foi solicitado no Update
         if (devePular)
         {
             EfetuarPulo();
@@ -71,7 +69,9 @@ public class PersonagemController : MonoBehaviour
     {
         float velocidadeAlvo = horizontalInput * velMaxima;
         float taxaVariacao = (horizontalInput != 0) ? aceleracao : desaceleracao;
-        float novoX = Mathf.MoveTowards(rb2d.velocity.x, velocidadeAlvo, taxaVariacao * Time.fixedDeltaTime);
+        float novoX = Mathf.MoveTowards(rb2d.velocity.x, 
+                                        velocidadeAlvo, 
+                                        taxaVariacao * Time.fixedDeltaTime);
 
         rb2d.velocity = new Vector2(novoX, rb2d.velocity.y);
     }
@@ -84,14 +84,17 @@ public class PersonagemController : MonoBehaviour
 
     private void GirarSprite()
     {
-        
         if (horizontalInput > 0f)
         {
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), 
+                                               transform.localScale.y, 
+                                               transform.localScale.z);
         }
         else if (horizontalInput < 0f)
         {
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), 
+                                               transform.localScale.y, 
+                                               transform.localScale.z);
         }
     }
 
